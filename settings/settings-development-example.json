@@ -1,0 +1,8 @@
+{
+  "private": {
+    "ROOT_URL": "http://antware.mx",
+    "MAIL_URL": "smtp://wadjcerong:Jceron1$@smtp.gmail.com:587",
+    "MONGO_URL": "mongodb://localhost:27017/scaffold",
+    "STORAGE_PATH": "C:/Users/Iván/Documents/WEB/scaffold-meteor-vue/.uploads"
+  }
+}

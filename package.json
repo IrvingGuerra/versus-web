@@ -1,0 +1,43 @@
+{
+  "name": "scaffold-meteor-vue",
+  "version": "1.0.0",
+  "description": "Auth Scaffold with Meteor and Vue",
+  "author": "Antware",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "run:mac": "MONGO_URL=mongodb://localhost:27017/scaffold meteor --settings ./settings/settings-development.json",
+    "run:windows": "SET MONGO_URL=mongodb://localhost:27017/scaffold& meteor --settings ./settings/settings-development.json",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "desktop": "meteor-desktop"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.9.6",
+    "bcrypt": "^4.0.1",
+    "busboy": "^0.3.1",
+    "detect-file-type": "^0.2.8",
+    "file-type": "^14.1.4",
+    "fs-extra": "^9.0.0",
+    "jquery": "^3.4.1",
+    "meteor-node-stubs": "^1.0.0",
+    "node-thumbnail": "^0.15.0",
+    "util": "^0.12.2",
+    "vee-validate": "2.1.7",
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.15.5",
+    "vue-meteor-tracker": "^2.0.0-beta.5",
+    "vue-router": "^3.1.6",
+    "vuedraggable": "^2.23.2",
+    "vuetify": "^2.2.17",
+    "vuetify-image-input": "^19.1.0",
+    "vuex": "^3.1.3",
+    "vuex-persist": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "electron": "6.1.7",
+    "electron-builder": "21.2.0",
+    "meteor-desktop": "^2.2.5"
+  }
+}
