@@ -24,11 +24,9 @@ Api.addRoute('player/updatePersonalData', {
             check(player.phoneLada, String);
             check(player.phoneNumber, String);
         }
-        validate(this.queryParams);
-
-        let user = Meteor.users.findOne(this.queryParams.idUser);
+        validate(this.request.data);
+        let user = Meteor.users.findOne(this.request.data.idUser);
         if (user) {
-
             if (this.request.files !== undefined && this.request.files.length > 0) {
                 let file = null;
                 file = this.request.files[0];
@@ -51,22 +49,21 @@ Api.addRoute('player/updatePersonalData', {
                     };
                 }
             }
-
             try {
                 let newUser = {
-                    _id: this.queryParams.idUser,
-                    correo: this.queryParams.email,
+                    _id: this.request.data.idUser,
+                    correo: this.request.data.email,
                     usuario: user.username,
                     perfil: 'player',
                     profile: {
                         perfil: 'player',
-                        firstName: this.queryParams.firstName,
-                        lastName: this.queryParams.lastName,
-                        gender: this.queryParams.gender,
-                        birthday: this.queryParams.birthday,
+                        firstName: this.request.data.firstName,
+                        lastName: this.request.data.lastName,
+                        gender: this.request.data.gender,
+                        birthday: this.request.data.birthday,
                         phone: {
-                            lada: this.queryParams.phoneLada,
-                            number: this.queryParams.phoneNumber
+                            lada: this.request.data.phoneLada,
+                            number: this.request.data.phoneNumber
                         }
                     }
                 };
