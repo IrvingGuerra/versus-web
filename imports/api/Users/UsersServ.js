@@ -119,7 +119,7 @@ export default {
                 }
             }
         }
-        if(newUser.profile.perfil === 'player'){
+        if(newUser.profile !== undefined && newUser.profile.perfil === 'player'){
             Meteor.users.update(newUser._id, {
                 $set: {
                     profile: {
