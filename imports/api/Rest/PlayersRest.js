@@ -4,6 +4,7 @@ import {ResponseMessage} from "../../startup/server/BusinessClass/ResponseMessag
 import {Meteor} from "meteor/meteor";
 import Utilities from "../../startup/server/Utilities";
 import UsersServ from "../Users/UsersServ";
+import {check} from "meteor/check";
 
 Api.addRoute('player/updatePersonalData', {
     post: async function () {
@@ -14,12 +15,21 @@ Api.addRoute('player/updatePersonalData', {
             },
             headers: {}
         };
+        function validate(player) {
+            check(player.idUser, String);
+            check(player.firstName, String);
+            check(player.lastName, String);
+            check(player.email, String);
+            check(player.gender, String);
+            check(player.birthday, String);
+            check(player.phoneLada, String);
+            check(player.phoneNumber, String);
+        }
+        validate(this.queryParams);
         let file = null;
-        if (this.request.files.length > 0) {
+        if (this.request.files !== undefined && this.request.files.length > 0) {
             file = this.request.files[0];
         }
-        console.log(file)
-
         let user = Meteor.users.findOne(this.queryParams.idUser);
         if (user) {
             try {
@@ -40,7 +50,7 @@ Api.addRoute('player/updatePersonalData', {
                         }
                     }
                 };
-                await UsersServ.updateUser(newUser, null);
+                await UsersServ.updateUser(newUser, file);
                 console.log("Usuario actualizado con exito");
                 responseMessage = {
                     statusCode: 201,
@@ -73,6 +83,10 @@ Api.addRoute('player/:idPlayer', {
             },
             headers: {}
         };
+        function validate(idPlayer) {
+            check(idPlayer, String);
+        }
+        validate(this.urlParams.idPlayer);
         let user = Meteor.users.findOne(this.urlParams.idPlayer);
         if (user) {
             let file = null;

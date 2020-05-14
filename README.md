@@ -2,18 +2,27 @@
 
 ## Test Endpoints
 
+ddp --host 34.72.222.234 --port 80 connect
 ## Register Player IrvingTsukune
-ddp call 'playerSignup' '{"firstName":"Irving","lastName":"Guerra","username":"IrvingTsukune","email":"iguerrav1500@alumno.ipn.mx","gender":"male","birthday":"1997-09-19","phone":{"lada":"+52","number":5531044967}}'
+ddp --host 34.72.222.234 --port 80 call 'playerSignup' '{"firstName":"Irving","lastName":"Guerra","username":"IrvingTsukune","email":"iguerrav1500@alumno.ipn.mx","gender":"male","birthday":"1997-09-19","phone":{"lada":"+52","number":5531044967}}'
 ## Register Player GokuKakaroto
-ddp call 'playerSignup' '{"firstName":"Goku","lastName":"Kakaroto","username":"Goku","email":"goku@gmail.com","gender":"male","birthday":"1997-09-19","phone":{"lada":"+52","number":5531044967}}'
+ddp --host 34.72.222.234 --port 80 call 'playerSignup' '{"firstName":"Goku","lastName":"Kakaroto","username":"Goku","email":"goku@gmail.com","gender":"male","birthday":"1997-09-19","phone":{"lada":"+52","number":5531044967}}'
+## Register Player VeguetaGarcia
+ddp --host 34.72.222.234 --port 80 call 'playerSignup' '{"firstName":"Rene","lastName":"Garcia","username":"Vegueta Garcia","email":"reneGarcia@alumno.ipn.mx","gender":"male","birthday":"1997-09-19","phone":{"lada":"+52","number":5531044967}}'
+
+
 ## Ver usuarios registrados
-ddp subscribe 'players'
+ddp --host 34.72.222.234 --port 80 subscribe 'players'
 ## Enviar solicitud de amistad
-ddp call 'sendFriendRequest' '{"idSender":"qyFFnqkb3AHaFhMAj","idTargetPlayer":"4CJ3Anma6EDqRXwbK"}'
+ddp --host 34.72.222.234 --port 80 call 'sendFriendRequest' '{"idSender":"qyFFnqkb3AHaFhMAj","idTargetPlayer":"4CJ3Anma6EDqRXwbK"}'
 ## Aceptar solicitud de amistad
-ddp call answerFriendRequest "xvMyg4tCupGPrnfq4"
+ddp --host 34.72.222.234 --port 80 call answerFriendRequest "xvMyg4tCupGPrnfq4"
 ## Ver solicitudes de amistades
-ddp subscribe 'friendRequest' '4CJ3Anma6EDqRXwbK'
+ddp --host 34.72.222.234 --port 80 subscribe 'friendRequest' '4CJ3Anma6EDqRXwbK'
+
+##
+db.auth(root,root123)
+db.users.find({ username: "Goku" })
 
 ## Description
 

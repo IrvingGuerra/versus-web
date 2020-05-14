@@ -1,6 +1,6 @@
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import UsersServ from "../Users/UsersServ";
-import {check} from "meteor/check";
+import {check, Match} from "meteor/check";
 import {ResponseMessage} from "../../startup/server/BusinessClass/ResponseMessage";
 import Utilities from "../../startup/server/Utilities";
 
@@ -9,7 +9,10 @@ export const signupPlayerMethod = new ValidatedMethod({
     validate(player) {
         check(player.firstName, String);
         check(player.lastName, String);
-        check(player.username, String);
+        check(player.username, Match.Where((username) => {
+            check(username, String);
+            return username.indexOf(" ") === -1;
+        }));
         check(player.email, String);
         check(player.gender, String);
         check(player.birthday, String);
