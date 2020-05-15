@@ -19,7 +19,7 @@
     "detect-file-type": "^0.2.8",
     "file-type": "^14.1.4",
     "fs-extra": "^9.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "meteor-node-stubs": "^1.0.0",
     "node-thumbnail": "^0.15.0",
     "util": "^0.12.2",
