@@ -4,6 +4,7 @@ import {ResponseMessage} from "../../startup/server/BusinessClass/ResponseMessag
 import {Meteor} from "meteor/meteor";
 import UsersServ from "../Users/UsersServ";
 import {check} from "meteor/check";
+import * as CryptoJS from 'crypto-js';
 
 Api.addRoute('player/login' , {
     post: function () {
