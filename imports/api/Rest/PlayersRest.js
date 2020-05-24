@@ -5,6 +5,43 @@ import {Meteor} from "meteor/meteor";
 import UsersServ from "../Users/UsersServ";
 import {check} from "meteor/check";
 
+Api.addRoute('player/login' , {
+    post: function () {
+        let responseMessage = {
+            statusCode: 400,
+            body: {
+                message: "Data is missing or user not found"
+            },
+            headers: {}
+        };
+        let user = Meteor.users.findOne({username: this.bodyParams.username});
+        if(user){
+            const decryptedPswSaved = JSON.parse(CryptoJS.AES.decrypt(user.profile.password, 'Versus team, the best developers').toString(CryptoJS.enc.Utf8));
+            const decryptedPswSend= JSON.parse(CryptoJS.AES.decrypt(this.bodyParams.password, 'Versus team, the best developers').toString(CryptoJS.enc.Utf8));
+            if(decryptedPswSaved === decryptedPswSend){
+                responseMessage = {
+                    statusCode: 201,
+                    body: {
+                        message: "Credenciales correctas"
+                    },
+                    headers: {
+                        user: JSON.stringify(user)
+                    }
+                };
+            }else{
+                responseMessage = {
+                    statusCode: 500,
+                    body: {
+                        message: "Credenciales incorrectas!"
+                    },
+                    headers: {}
+                };
+            }
+        }
+        return responseMessage;
+    }
+});
+
 Api.addRoute('player/updatePersonalData', {
     post: async function () {
         let responseMessage = {
