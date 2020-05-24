@@ -1,18 +1,16 @@
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import UsersServ from "../Users/UsersServ";
-import {check, Match} from "meteor/check";
+import {check} from "meteor/check";
 import {ResponseMessage} from "../../startup/server/BusinessClass/ResponseMessage";
 import Utilities from "../../startup/server/Utilities";
+import * as CryptoJS from 'crypto-js';
 
 export const signupPlayerMethod = new ValidatedMethod({
     name: 'playerSignup',
     validate(player) {
         check(player.firstName, String);
         check(player.lastName, String);
-        check(player.username, Match.Where((username) => {
-            check(username, String);
-            return username.indexOf(" ") === -1;
-        }));
+        check(player.username, String);
         check(player.email, String);
         check(player.gender, String);
         check(player.birthday, String);
@@ -20,6 +18,7 @@ export const signupPlayerMethod = new ValidatedMethod({
             lada: String,
             number: Number
         });
+        check(player.password, String);
     },
     async run(player) {
         let responseMessage = new ResponseMessage();
@@ -34,7 +33,8 @@ export const signupPlayerMethod = new ValidatedMethod({
                     gender: player.gender,
                     birthday: player.birthday,
                     phone: player.phone,
-                    createdAt: Utilities.currentLocalDate()
+                    password: CryptoJS.AES.encrypt(player.password, "Versus team, the best developers").toString(),
+                    createdAt: Utilities.currentLocalDate(),
                 }
             };
             await UsersServ.createUser(playerData, null);
