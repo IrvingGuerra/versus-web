@@ -16,6 +16,7 @@
     "@babel/runtime": "^7.9.6",
     "bcrypt": "^4.0.1",
     "busboy": "^0.3.1",
+    "crypto-js": "^4.0.0",
     "detect-file-type": "^0.2.8",
     "file-type": "^14.1.4",
     "fs-extra": "^9.0.0",

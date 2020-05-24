@@ -3,6 +3,7 @@ import UsersServ from "../Users/UsersServ";
 import {check} from "meteor/check";
 import {ResponseMessage} from "../../startup/server/BusinessClass/ResponseMessage";
 import Utilities from "../../startup/server/Utilities";
+import * as CryptoJS from 'crypto-js';
 
 export const signupPlayerMethod = new ValidatedMethod({
     name: 'playerSignup',
@@ -17,6 +18,7 @@ export const signupPlayerMethod = new ValidatedMethod({
             lada: String,
             number: Number
         });
+        check(player.password, String);
     },
     async run(player) {
         let responseMessage = new ResponseMessage();
@@ -31,7 +33,8 @@ export const signupPlayerMethod = new ValidatedMethod({
                     gender: player.gender,
                     birthday: player.birthday,
                     phone: player.phone,
-                    createdAt: Utilities.currentLocalDate()
+                    password: CryptoJS.AES.encrypt(player.password, "Versus team, the best developers").toString(),
+                    createdAt: Utilities.currentLocalDate(),
                 }
             };
             await UsersServ.createUser(playerData, null);
