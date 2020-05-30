@@ -12,3 +12,15 @@ const messagesPublication = new PublishEndpoint('messages', function (idContact 
         }
     });
 });
+
+const msnPublication = new PublishEndpoint('messagesPlayers', function (idA = null, idB = null) {
+    return Message.find({
+        $or: [{idSender: idA, idReceiver: idB},
+            {idSender: idB, idReceiver: idA}],
+    }, {
+        limit: 20,
+        sort: {
+            date: -1
+        }
+    });
+});
