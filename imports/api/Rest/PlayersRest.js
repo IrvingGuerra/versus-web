@@ -21,44 +21,69 @@ Api.addRoute('player/register' , {
             check(this.bodyParams.birthday, String);
             check(this.bodyParams.phone, {
                 lada: String,
-                number: Number
+                number: String
             });
             check(this.bodyParams.password, String);
             let user = Meteor.users.findOne({username: this.bodyParams.username});
             if(!user){
-                try {
-                    let playerData = {
-                        username: this.bodyParams.username,
-                        email: this.bodyParams.email,
-                        profile: {
-                            perfil: "player",
-                            firstName: this.bodyParams.firstName,
-                            lastName: this.bodyParams.lastName,
-                            gender: this.bodyParams.gender,
-                            birthday: this.bodyParams.birthday,
-                            phone: this.bodyParams.phone,
-                            password: CryptoJS.AES.encrypt(this.bodyParams.password, "Versus team, the best developers").toString(),
-                            createdAt: Utilities.currentLocalDate(),
+                user = Meteor.users.findOne({"emails.address": this.bodyParams.email});
+                if(!user){
+                    user = Meteor.users.findOne({"profile.phone.number": this.bodyParams.phone.number});
+                    if(!user){
+                        try {
+                            let playerData = {
+                                username: this.bodyParams.username,
+                                email: this.bodyParams.email,
+                                profile: {
+                                    perfil: "player",
+                                    firstName: this.bodyParams.firstName,
+                                    lastName: this.bodyParams.lastName,
+                                    gender: this.bodyParams.gender,
+                                    birthday: this.bodyParams.birthday,
+                                    phone: this.bodyParams.phone,
+                                    password: CryptoJS.AES.encrypt(this.bodyParams.password, "Versus team, the best developers").toString(),
+                                    createdAt: Utilities.currentLocalDate(),
+                                }
+                            };
+                            UsersServ.createUser(playerData, null);
+                            console.log("Successfully registered player");
+                            response = {
+                                statusCode: 201,
+                                body: {
+                                    message: "Successfully registered player"
+                                },
+                                headers: {}
+                            };
+
                         }
-                    };
-                        UsersServ.createUser(playerData, null);
-                        console.log("Successfully registered player");
+                        catch (err) {
+                            console.error("Player registration failed: ", err);
+                            response = {
+                                statusCode: 500,
+                                body: {
+                                    message: "Player registration failed",
+                                    details: e
+                                }
+                            };
+                        }
+                    }else{
+                        console.log("Phone already registered");
                         response = {
-                            statusCode: 201,
+                            statusCode: 401,
                             body: {
-                                message: "Successfully registered player"
+                                message: "Phone already registered"
                             },
                             headers: {}
                         };
-
-                } catch (err) {
-                    console.error("Player registration failed: ", err);
+                    }
+                }else{
+                    console.log("Email already registered");
                     response = {
-                        statusCode: 500,
+                        statusCode: 401,
                         body: {
-                            message: "Player registration failed",
-                            details: e
-                        }
+                            message: "Email already registered"
+                        },
+                        headers: {}
                     };
                 }
             }else{
